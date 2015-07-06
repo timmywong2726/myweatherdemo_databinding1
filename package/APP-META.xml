@@ -1,12 +1,12 @@
 <application version="2.0" xmlns="http://aps-standard.org/ns/2">
 
-    <id>http://myweatherdemo.com/intro2</id>
-    <name>myweatherdemo-intro2</name>
+    <id>http://myweatherdemo.com/databinding1</id>
+    <name>myweatherdemo-databinding1</name>
     <version>1.0</version>
     <release>1</release>
     <presentation>
         <navigation id="ccp" label="MyWeatherDemo">
-            <var name="company" type-id="http://myweatherdemo.com/intro2/subscription_service/1.0"/>
+            <var name="company" type-id="http://myweatherdemo.com/databinding1/subscription_service/1.0"/>
             <plugs-to id="http://www.aps-standard.org/ui/service"/>
             <item id="temperature">
                 <view id="temperature" label="Company Details">

@@ -4,7 +4,7 @@
     require "aps/2/runtime.php";    
 
     /**
-    * @type("http://myweatherdemo.com/intro2/subscription_service/1.0")
+    * @type("http://myweatherdemo.com/databinding1/subscription_service/1.0")
     * @implements("http://aps-standard.org/types/core/resource/1.0")
     */
     
@@ -13,7 +13,7 @@
     {
 
         /**
-         * @link("http://myweatherdemo.com/intro2/application/1.0")
+         * @link("http://myweatherdemo.com/databinding1/application/1.0")
          * @required
          */
         public $application;
