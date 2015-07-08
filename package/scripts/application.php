@@ -19,6 +19,6 @@
          * @title("Token")
          * @encrypted
          */
-        public $token;          
+        public $provider_token;          
     }
 ?>

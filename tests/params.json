@@ -1,5 +1,5 @@
 {
     "app_defaults": {
-        "token": "osamwd"
+        "provider_token": "osamwd"
     }
 }
