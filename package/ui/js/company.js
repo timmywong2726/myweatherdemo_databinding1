@@ -1,18 +1,23 @@
 require(
     ["aps/ResourceStore",
+    // http://dojotoolkit.org/reference-guide/1.10/dojox/mvc/getStateful.html
     "dojox/mvc/getStateful",
+    // http://dojotoolkit.org/reference-guide/1.10/dojox/mvc/at.html
     "dojox/mvc/at",
     "aps/load",
     "dojo/when",
+    // https://dojotoolkit.org/reference-guide/1.10/dijit/registry.html
     "dijit/registry",
     "aps/ready!"],
 function(ResourceStore, getStateful, at, load, when, registry){
 
+    // preparing connector to APS controller, at this point no request is made
     var store = new ResourceStore({
         target: "/aps/2/resources/"
     });
 
-    var company = getStateful(aps.context.vars.company);
+    // to bind data to widgets model has to be a Stateful object
+    var company = getStateful(aps.context.vars.subscription_service);
 
     var widgets =
         ["aps/PageContainer", { id: "top_container" }, [
@@ -22,6 +27,8 @@ function(ResourceStore, getStateful, at, load, when, registry){
                 password: at(company, "password")
             }],
             ["aps/FieldSet", { id: "properties", title: true}, [
+                // using at module we specify to which property in the model the widget is connected
+                // once a new value is provided it will be automatically synced back to model
                 ["aps/TextBox", {label: "Company Name", value: at(company, "company_name"), required: true}],
                 ["aps/TextBox", {label: "Username", value: at(company, "username"), required: true }],
                 ["aps/TextBox", {label: "Password", value: at(company, "password"), required: true }]
@@ -30,13 +37,17 @@ function(ResourceStore, getStateful, at, load, when, registry){
 
     load(widgets);
 
+    // event handler for submit control button specified in APP-META.xml
     aps.app.onSubmit = function() {
+        // we should not allow sending the data if required fields do not hold any values
         var page = registry.byId("top_container");
+            // validate() method on PageContainer object goes over all the widget triggering validation for each of them
             if (!page.validate()) {
                 aps.apsc.cancelProcessing();
                 return;
             }
         when(store.put(company), function() {
+            // cancelProcessing() will reset "Please wait" text back to "Submit Changes" once we receive confirmation from endpoint that company was updated successfully
             aps.apsc.cancelProcessing();
         });
     };

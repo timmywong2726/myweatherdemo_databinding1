@@ -1,6 +1,5 @@
 <?php
 
-    define('APS_DEVELOPMENT_MODE', true);
     require "aps/2/runtime.php";    
 
     /**
@@ -32,12 +31,6 @@
 
         /**
          * @type(string)
-         * @title("Company authorization token")
-         */
-        public $company_token;
-
-        /**
-         * @type(string)
          * @title("Login to MyWeatherDemo interface")
          */
         public $username;
@@ -57,38 +50,41 @@
         const BASE_URL = "http://www.myweatherdemo.com/api/company/";
         
         public function provision(){
+
+            $this->company_name = $this->account->companyName;
             
-            // to create a company in external service we need to pass country, city and name of the company
             $request = array(
                     'country' => $this->account->addressPostal->countryName,
                     'city' => $this->account->addressPostal->locality,
-                    'name' => $this->account->companyName,
+                    'name' => $this->company_name
             );
             
             $response = $this->send_curl_request('POST', self::BASE_URL, $request);
 
-            // need to save UID in APSC to delete/get properties of the company in external service
             $this->company_id = $response->{'id'};
-            $this->company_token = $response->{'token'};
             $this->username = $response->{'username'};
             $this->password = $response->{'password'};
-            $this->company_name = $response->{'name'};
+
         }
 
         public function unprovision(){
 
             $url = self::BASE_URL . $this->company_id;
-
             $response = $this->send_curl_request('DELETE', $url);
         }
 
+        // unprovision() method is executed when resource is changed (PUT)
         public function configure($new){
 
+            // need to pass company_id to indicate which company we want to delete
             $url = self::BASE_URL . $this->company_id;
+
+            // $new contains new values that will be saved in APS controller after configure() exits
+            // you can access old values using $this
             $request = array(
                     'name' => $new->company_name,
                     'username' => $new->username,
-                    'password' => $new->password,
+                    'password' => $new->password
             );
             $response = $this->send_curl_request('PUT', $url, $request);
 
@@ -96,9 +92,7 @@
 
         private function send_curl_request($verb, $url, $payload = ''){
 
-            $logger = \APS\LoggerRegistry::get();
-
-            $token = $this->application->token;
+            $token = $this->application->provider_token;
 
             $headers = array(
                     'Content-type: application/json',
@@ -116,7 +110,6 @@
             ));
             
             $response = json_decode(curl_exec($ch));
-            $logger->debug("Response was: " . print_r($response, true));
             
             curl_close($ch);
 
