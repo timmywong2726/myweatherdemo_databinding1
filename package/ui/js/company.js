@@ -1,15 +1,15 @@
-require(
-    ["aps/ResourceStore",
+require([
+    "dojo/when",
     // http://dojotoolkit.org/reference-guide/1.10/dojox/mvc/getStateful.html
     "dojox/mvc/getStateful",
     // http://dojotoolkit.org/reference-guide/1.10/dojox/mvc/at.html
     "dojox/mvc/at",
-    "aps/load",
-    "dojo/when",
     // https://dojotoolkit.org/reference-guide/1.10/dijit/registry.html
     "dijit/registry",
-    "aps/ready!"],
-function(ResourceStore, getStateful, at, load, when, registry){
+    "aps/ResourceStore",
+    "aps/load",
+    "aps/ready!"
+], function(when, getStateful, at, registry, ResourceStore, load) {
 
     // preparing connector to APS controller, at this point no request is made
     var store = new ResourceStore({
@@ -20,7 +20,7 @@ function(ResourceStore, getStateful, at, load, when, registry){
     var company = getStateful(aps.context.vars.subscription_service);
 
     var widgets =
-        ["aps/PageContainer", { id: "top_container" }, [
+        ["aps/PageContainer", [
             ["aps/Output", {
                 content: "Here you can update your company information.<br><br>To verify the changes log in to to <a href='http://www.myweatherdemo.com/login' target='_blank'>http://www.myweatherdemo.com/login</a> using username <b>${username}</b> and password <b>${password}</b>.<br><br>Click on 'Profile' tab once logged in to see company infromation.<br><br>Note: since company is managed through Odin Service Automation you will not be able to change company information directly from MyWeatherDemo.",
                 username: at(company, "username"),
@@ -40,7 +40,7 @@ function(ResourceStore, getStateful, at, load, when, registry){
     // event handler for submit control button specified in APP-META.xml
     aps.app.onSubmit = function() {
         // we should not allow sending the data if required fields do not hold any values
-        var page = registry.byId("top_container");
+        var page = registry.byId("apsPageContainer");
             // validate() method on PageContainer object goes over all the widget triggering validation for each of them
             if (!page.validate()) {
                 aps.apsc.cancelProcessing();
