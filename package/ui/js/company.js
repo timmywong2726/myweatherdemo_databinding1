@@ -22,7 +22,7 @@ require([
     var widgets =
         ["aps/PageContainer", [
             ["aps/Output", {
-                id: "description"
+                id: "description",
                 content: "Here you can update your company information.<br><br>To verify the changes log in to to <a href='http://www.myweatherdemo.com/login' target='_blank'>http://www.myweatherdemo.com/login</a> using username <b>${username}</b> and password <b>${password}</b>.<br><br>Click on 'Profile' tab once logged in to see company infromation.<br><br>Note: since company is managed through Odin Service Automation you will not be able to change company information directly from MyWeatherDemo.",
                 username: at(company, "username"),
                 password: at(company, "password")
