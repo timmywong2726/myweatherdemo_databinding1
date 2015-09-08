@@ -17,7 +17,7 @@ require([
     });
 
     // to bind data to widgets model has to be a Stateful object
-    var company = getStateful(aps.context.vars.subscription_service);
+    var company = getStateful(aps.context.vars.company);
 
     var widgets =
         ["aps/PageContainer", [

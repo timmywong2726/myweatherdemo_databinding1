@@ -6,7 +6,7 @@
     <release>1</release>
     <presentation>
         <navigation id="ccp" label="MyWeatherDemo">
-            <var name="subscription_service" type-id="http://myweatherdemo.com/databinding1/subscription_service/1.0"/>
+            <var name="company" type-id="http://myweatherdemo.com/databinding1/subscription_service/1.0"/>
             <plugs-to id="http://www.aps-standard.org/ui/service"/>
             <item id="company">
                 <view id="company" label="Update Company Information">
