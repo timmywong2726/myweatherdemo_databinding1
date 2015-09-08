@@ -27,7 +27,7 @@ require([
                 username: at(company, "username"),
                 password: at(company, "password")
             }],
-            ["aps/FieldSet", { id: "properties", title: true}, [
+            ["aps/FieldSet", {title: true}, [
                 // using at module we specify to which property in the model the widget is connected
                 // once a new value is provided it will be automatically synced back to model
                 ["aps/TextBox", {id: "company_name", label: "Company Name", value: at(company, "company_name"), required: true}],
